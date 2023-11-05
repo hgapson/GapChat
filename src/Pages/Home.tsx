@@ -1,10 +1,13 @@
-import Messsage from '../components/Message'
+import Sidebar from '../components/Sidebar'
+import Chat from '../components/Chat'
+import '../App.scss'
+
 function Home() {
   return (
-    <div>
-      <div>
-        <Messsage />
-        {/* <Sidebar /> */}
+    <div className="home">
+      <div className="container">
+        <Sidebar />
+        <Chat />
       </div>
     </div>
   )
