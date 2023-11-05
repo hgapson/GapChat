@@ -1,8 +1,7 @@
 function Home() {
   return (
     <div>
-      Hello Home
-      {/* <Message /> */}
+      <div></div>
     </div>
   )
 }
