@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# Dependency directories
+node_modules/
+.yarn/
+
+# Build files
+dist/
+.cache/
+.env
+.DS_Store
