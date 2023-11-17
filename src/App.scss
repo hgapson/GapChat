@@ -72,6 +72,7 @@
       color: #5d5b8d;
       font-size: 12px;
       margin-top: 10px;
+      cursor: pointer;
     }
   }  
 }
@@ -136,13 +137,14 @@ background-color: #3e3c61;
     padding: 10px;
 
     input{
-      background-color: transparent;
-      border: none;
+      background-color: #2f2d52;
+      border-radius: 10px;
       color: white;
       outline: none;
 
       &::placeholder{
         color: lightgrey;
+        opacity: 0.5;
       }
     }
   }
@@ -159,25 +161,70 @@ background-color: #3e3c61;
       background-color: #2f2d52;
     }
     img{
-      width: 50px;
-      height: 50px;
+      width: 35px;
+      height: 35px;
       border-radius: 50%;
+      margin-top: -20px;
     }
-
-    .userChatInfo{
-
-      img{width: 50px;
-        height: 50px;
-        border-radius: 50%;}
-      span{font-style: 18px; font-weight: 500;}
-      p{font-style: 14px; color: lightgray;}
-    }
+    span{font-size: 15px; font-weight: 500;}
+    p{font-size: 12px; color: lightgray; margin-top: 0px;}
   }
 }
   }
 
+  .usersChatInfo{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: white;
+    position: relative;
+    margin-bottom: -20px;
+    cursor: pointer;
+    
+    &:hover{
+      background-color: #2f2d52;
+    }
+    img{
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      margin-top: -20px;
+    }
+
+    .userDetails{
+      padding: 5px;
+
+    span{font-size: 15px; font-weight: 500;}
+    p{font-size: 12px; color: lightgray; margin-top: 0px;}
+    }
+
+    
+  }
+
   .chat{
     flex: 2;
+
+    .chatInfo{
+      height: 50px;
+      background-color: #5d5b8d;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      color: lightgray;
+
+    }
+   
+  .chatIcons{
+    display: flex;
+    gap: 10px;
+    cursor: pointer;
+
+    icon{
+      height: 24px;
+    }
+  }
   }
 }
 }

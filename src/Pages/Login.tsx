@@ -12,6 +12,7 @@ function Login() {
           <input type="password" placeholder="password" />
           <button>Sign In</button>
         </form>
+        <p>forget password?</p>
         <p>You don't have account? Register</p>
       </div>
     </div>
