@@ -5,7 +5,8 @@ import {
   faUserPlus,
   faEllipsis,
 } from '@fortawesome/free-solid-svg-icons'
-import Message from './Message'
+import Messages from './Messages'
+import Input from './Input'
 
 function Chat() {
   return (
@@ -19,7 +20,8 @@ function Chat() {
           <FontAwesomeIcon icon={faEllipsis} className="dots" />
         </div>
       </div>
-      <Message />
+      <Messages />
+      <Input />
     </div>
   )
 }

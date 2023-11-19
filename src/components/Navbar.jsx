@@ -1,4 +1,6 @@
 import React from 'react'
+import { faPowerOff } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function Navbar() {
   return (
@@ -10,7 +12,7 @@ function Navbar() {
           alt="Gap"
         />
         <span>Gapson</span>
-        <button>Logout</button>
+        <FontAwesomeIcon icon={faPowerOff} className="video" />
       </div>
     </div>
   )
