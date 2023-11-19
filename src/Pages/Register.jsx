@@ -1,5 +1,5 @@
 // import { Link } from 'react-router-dom'
-import react, { useState } from 'react'
+import { useState } from 'react'
 import add from '../Images/image.png'
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { auth, storage } from '../firebase'
