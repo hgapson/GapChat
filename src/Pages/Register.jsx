@@ -1,12 +1,15 @@
-// import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import add from '../Images/image.png'
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
-import { auth, storage } from '../firebase'
+import { auth, storage, db } from '../firebase'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
+import { doc, setDoc } from 'firebase/firestore'
+import { useNavigate } from 'react-router-dom'
 
 function Register() {
   const [error, setError] = useState(false)
+  const navigate = useNavigate()
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     const displayName = e.target.name.value
@@ -17,13 +20,16 @@ function Register() {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password)
 
-      const storageRef = ref(storage, displayName)
+      const storageRef = ref(storage, `avatars/${res.user.uid}/${file.name}`)
 
       const uploadTask = uploadBytesResumable(storageRef, file)
 
       uploadTask.on(
-        (error) => {
+        'state_changed',
+        null,
+        (uploadError) => {
           setError(true)
+          console.error('Error uploading file:', uploadError)
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
@@ -31,13 +37,23 @@ function Register() {
               displayName,
               photoURL: downloadURL,
             })
+            await setDoc(doc(db, 'users', res.user.uid), {
+              uid: res.user.uid,
+              displayName,
+              email,
+              photoURL: downloadURL,
+            })
+            await setDoc(doc(db, 'userChats', res.user.uid), {})
+            navigate('/')
           })
         }
       )
-    } catch (error) {
+    } catch (authError) {
       setError(true)
+      console.error('Error creating user:', authError)
     }
   }
+
   return (
     <>
       <div className="regBody">
@@ -45,7 +61,7 @@ function Register() {
           <span className="logo">GapChat</span>
           <span className="title">Register</span>
           <form onSubmit={handleSubmit}>
-            <input type="text" name="name" id="name" placeholder="name" />
+            <input type="text" name="name" id="name" placeholder="Name" />
             <input
               type="email"
               name="email"
@@ -57,14 +73,15 @@ function Register() {
               type="password"
               name="password"
               id="password"
-              placeholder="Enter Password"
+              placeholder="Enter Password "
             />
+
             <input
-              autoComplete="new-password"
+              autoComplete="comfirm"
               type="password"
-              name="confirm"
-              id="confirm"
-              placeholder="Confirm Password"
+              name="comfirm"
+              id="comfirm"
+              placeholder="comfirm Password"
             />
             <input
               style={{ display: 'none' }}
@@ -73,16 +90,19 @@ function Register() {
               name="file"
             />
             <label htmlFor="file">
-              <img src={add} alt="my picture" />
+              <img src={add} alt="Add Avatar" />
               <span>Add an Avatar</span>
             </label>
-            <button color="success">Sign up</button>
+            <button type="submit" color="success">
+              Sign up
+            </button>
             {error && <span>Something went wrong</span>}
           </form>
-          <p>You don't have account? Login</p>
+          <p>You already have an account? Login</p>
         </div>
       </div>
     </>
   )
 }
+
 export default Register

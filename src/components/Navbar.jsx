@@ -1,6 +1,8 @@
 import React from 'react'
 import { faPowerOff } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { signOut } from 'firebase/auth'
+import { auth } from '../firebase'
 
 function Navbar() {
   return (
@@ -12,7 +14,11 @@ function Navbar() {
           alt="Gap"
         />
         <span>Gapson</span>
-        <FontAwesomeIcon icon={faPowerOff} className="video" />
+        <FontAwesomeIcon
+          icon={faPowerOff}
+          className="power"
+          onClick={() => signOut(auth)}
+        />
       </div>
     </div>
   )

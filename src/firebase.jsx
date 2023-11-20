@@ -1,16 +1,19 @@
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
+
 const firebaseConfig = {
-  apiKey: 'AIzaSyDPv5D7O24A8it-B74VQR0Io3BB0i8WIL0',
-  authDomain: 'chat-35a57.firebaseapp.com',
-  projectId: 'chat-35a57',
-  storageBucket: 'chat-35a57.appspot.com',
-  messagingSenderId: '934174671735',
-  appId: '1:934174671735:web:d8276b53563834b5731772',
+  apiKey: 'AIzaSyB3ro-r5gWNLlCn_FoinxomSOyG6TC-9yI',
+  authDomain: 'gapchat-dd2a3.firebaseapp.com',
+  projectId: 'gapchat-dd2a3',
+  storageBucket: 'gapchat-dd2a3.appspot.com',
+  messagingSenderId: '764373702558',
+  appId: '1:764373702558:web:f4fb298981ecddebd8e88f',
 }
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig)
 export const auth = getAuth()
 export const storage = getStorage()
+export const db = getFirestore()
