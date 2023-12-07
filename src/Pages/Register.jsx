@@ -98,7 +98,7 @@ function Register() {
             />
             <label htmlFor="file">
               <img src={add} alt="Add Avatar" />
-              <span>Add an Avatar</span>
+              <span>Add an image</span>
             </label>
             <button type="submit" color="success">
               Sign up
