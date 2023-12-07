@@ -1,13 +1,14 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import add from '../Images/image.png'
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { auth, storage, db } from '../firebase'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { doc, setDoc } from 'firebase/firestore'
-import { useNavigate } from 'react-router-dom'
 
 function Register() {
-  const [error, setError] = useState(false)
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -15,20 +16,24 @@ function Register() {
     const displayName = e.target.name.value
     const email = e.target.email.value
     const password = e.target.password.value
+    const confirmPassword = e.target.confirmPassword.value
     const file = e.target.file.files[0]
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match')
+      return
+    }
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password)
-
       const storageRef = ref(storage, `avatars/${res.user.uid}/${file.name}`)
-
       const uploadTask = uploadBytesResumable(storageRef, file)
 
       uploadTask.on(
         'state_changed',
         null,
         (uploadError) => {
-          setError(true)
+          setError('Error uploading file')
           console.error('Error uploading file:', uploadError)
         },
         () => {
@@ -44,12 +49,15 @@ function Register() {
               photoURL: downloadURL,
             })
             await setDoc(doc(db, 'userChats', res.user.uid), {})
-            navigate('/')
+            setSuccess(true)
+            setTimeout(() => {
+              navigate('/login')
+            }, 1000) // Redirect to login page after 2 seconds
           })
         }
       )
     } catch (authError) {
-      setError(true)
+      setError('Error creating user')
       console.error('Error creating user:', authError)
     }
   }
@@ -75,13 +83,12 @@ function Register() {
               id="password"
               placeholder="Enter Password "
             />
-
             <input
-              autoComplete="comfirm"
+              autoComplete="confirm-password"
               type="password"
-              name="comfirm"
-              id="comfirm"
-              placeholder="comfirm Password"
+              name="confirmPassword"
+              id="confirmPassword"
+              placeholder="Confirm Password"
             />
             <input
               style={{ display: 'none' }}
@@ -96,9 +103,16 @@ function Register() {
             <button type="submit" color="success">
               Sign up
             </button>
-            {error && <span>Something went wrong</span>}
+            {error && <span className="error-message">{error}</span>}
+            {success && (
+              <span className="success-message">
+                Registration successful! Redirecting to login...
+              </span>
+            )}
           </form>
-          <p>You already have an account? Login</p>
+          <p>
+            You already have an account? <Link to="/login">Login</Link>
+          </p>
         </div>
       </div>
     </>
